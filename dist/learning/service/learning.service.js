@@ -11,11 +11,14 @@ const common_1 = require("@nestjs/common");
 const database_1 = require("firebase/database");
 const firebase_config_1 = require("../../firebase.config");
 let LearningService = class LearningService {
-    async createData(data) {
+    async createData(createLearningDto) {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
-        const newElementRef = (0, database_1.push)(dataRef, { dataRef: data });
-        await (0, database_1.set)(newElementRef, data);
-        console.log('Data created successfully');
+        const newElementRef = (0, database_1.push)(dataRef, { dataRef: createLearningDto });
+        await (0, database_1.set)(newElementRef, createLearningDto);
+        const snapshot = await (0, database_1.get)(newElementRef);
+        const createdData = snapshot.val();
+        console.log('Data created successfully', createdData);
+        return createdData;
     }
     async getData() {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
@@ -23,17 +26,33 @@ let LearningService = class LearningService {
         console.log('Data retrieved successfully');
         return snapshot.val();
     }
+    async getDataById(id) {
+        const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
+        const snapshot = await (0, database_1.get)(dataRef);
+        let retrievedData = null;
+        snapshot.forEach((childSnapshot) => {
+            const childKey = childSnapshot.key;
+            if (childKey === id) {
+                console.log('Data retrieved successfully', childSnapshot.val());
+                retrievedData = childSnapshot.val();
+            }
+        });
+        return retrievedData;
+    }
     async deleteData(id) {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
         const snapshot = await (0, database_1.get)(dataRef);
+        let deletedData = null;
         snapshot.forEach((childSnapshot) => {
             const childKey = childSnapshot.key;
             if (childKey === id) {
                 const dataToDeleteRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data/' + childKey);
                 (0, database_1.remove)(dataToDeleteRef);
                 console.log('Data deleted successfully');
+                deletedData = childSnapshot.val();
             }
         });
+        return deletedData;
     }
 };
 exports.LearningService = LearningService;

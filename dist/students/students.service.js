@@ -6,20 +6,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.StudentsService = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const learning_module_1 = require("./learning/learning.module");
-const students_module_1 = require("./students/students.module");
-let AppModule = class AppModule {
+let StudentsService = class StudentsService {
+    create(createStudentDto) {
+        return 'This action adds a new student';
+    }
+    findAll() {
+        return `This action returns all students`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} student`;
+    }
+    update(id, updateStudentDto) {
+        return `This action updates a #${id} student`;
+    }
+    remove(id) {
+        return `This action removes a #${id} student`;
+    }
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [learning_module_1.LearningModule, students_module_1.StudentsModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
-    })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+exports.StudentsService = StudentsService;
+exports.StudentsService = StudentsService = __decorate([
+    (0, common_1.Injectable)()
+], StudentsService);
+//# sourceMappingURL=students.service.js.map

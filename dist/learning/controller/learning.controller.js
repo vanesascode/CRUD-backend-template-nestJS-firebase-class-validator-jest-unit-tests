@@ -20,10 +20,13 @@ let LearningController = class LearningController {
         this.learningService = learningService;
     }
     async createData(data) {
-        await this.learningService.createData(data);
+        return await this.learningService.createData(data);
     }
     async getData() {
         return await this.learningService.getData();
+    }
+    async getDataById(id) {
+        return await this.learningService.getDataById(id);
     }
     async deleteData(id) {
         return await this.learningService.deleteData(id);
@@ -43,6 +46,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], LearningController.prototype, "getData", null);
+__decorate([
+    (0, common_1.Get)('getData/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], LearningController.prototype, "getDataById", null);
 __decorate([
     (0, common_1.Delete)('deleteData/:id'),
     __param(0, (0, common_1.Param)('id')),
