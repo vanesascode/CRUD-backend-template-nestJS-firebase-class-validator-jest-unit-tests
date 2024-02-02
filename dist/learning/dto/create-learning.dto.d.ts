@@ -1,6 +1,9 @@
 export declare class CreateLearningDto {
-    helper: string;
+    age: number;
     cat: string;
     dog: string;
     owner: string;
+    email: string;
+    createDate: Date;
+    otherAnimals: string[];
 }

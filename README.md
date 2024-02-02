@@ -23,7 +23,7 @@ $ npm install firebase
 
 You also need your own credentials when creating your database.
 
-## Installation of `class-validator` library
+## Installation of [class-validator](https://github.com/typestack/class-validator) library
 
 ```bash
 $ npm i --save class-validator class-transformer

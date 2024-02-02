@@ -9,6 +9,7 @@ import {
   NotFoundException,
   BadRequestException,
   Patch,
+  ValidationPipe,
 } from '@nestjs/common';
 import { LearningService } from '../service/learning.service';
 import { CreateLearningDto } from '../dto/create-learning.dto';
@@ -20,7 +21,7 @@ export class LearningController {
 
   @Post()
   async createData(
-    @Body() createLearningDto: CreateLearningDto,
+    @Body(new ValidationPipe()) createLearningDto: CreateLearningDto,
   ): Promise<CreateLearningDto> {
     return await this.learningService.createData(createLearningDto);
   }
@@ -28,7 +29,7 @@ export class LearningController {
   @Put(':id')
   async updateData(
     @Param('id') id: string,
-    @Body() updateLearningDto: UpdateLearningDto,
+    @Body(new ValidationPipe()) updateLearningDto: UpdateLearningDto,
   ): Promise<UpdateLearningDto> {
     return await this.learningService.updateData(id, updateLearningDto);
   }
@@ -36,7 +37,8 @@ export class LearningController {
   @Patch(':id')
   async patchData(
     @Param('id') id: string,
-    @Body() partialUpdateLearningDto: Partial<UpdateLearningDto>,
+    @Body(new ValidationPipe())
+    partialUpdateLearningDto: Partial<UpdateLearningDto>,
   ): Promise<UpdateLearningDto> {
     return await this.learningService.patchData(id, partialUpdateLearningDto);
   }
