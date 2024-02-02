@@ -20,11 +20,60 @@ let LearningService = class LearningService {
         console.log('Data created successfully', createdData);
         return createdData;
     }
-    async getData() {
+    async updateData(id, updateLearningDto) {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
         const snapshot = await (0, database_1.get)(dataRef);
-        console.log('Data retrieved successfully');
-        return snapshot.val();
+        let updatedData = null;
+        snapshot.forEach((childSnapshot) => {
+            const childKey = childSnapshot.key;
+            if (childKey === id) {
+                const dataToUpdateRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data/' + childKey);
+                let dataToUpdate = childSnapshot.val();
+                dataToUpdate = { ...dataToUpdate, ...updateLearningDto };
+                (0, database_1.set)(dataToUpdateRef, dataToUpdate);
+                console.log('Data updated successfully');
+                updatedData = dataToUpdate;
+            }
+        });
+        if (!updatedData) {
+            throw new Error(`Data with ID ${id} not found`);
+        }
+        return updatedData;
+    }
+    async patchData(id, partialUpdateLearningDto) {
+        const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
+        const snapshot = await (0, database_1.get)(dataRef);
+        let updatedData = null;
+        snapshot.forEach((childSnapshot) => {
+            const childKey = childSnapshot.key;
+            if (childKey === id) {
+                const dataToUpdateRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data/' + childKey);
+                const dataToUpdate = childSnapshot.val();
+                for (const key in partialUpdateLearningDto) {
+                    if (partialUpdateLearningDto.hasOwnProperty(key)) {
+                        dataToUpdate[key] = partialUpdateLearningDto[key];
+                    }
+                }
+                (0, database_1.set)(dataToUpdateRef, dataToUpdate);
+                console.log('Data updated successfully');
+                updatedData = dataToUpdate;
+            }
+        });
+        if (!updatedData) {
+            throw new Error(`Data with ID ${id} not found`);
+        }
+        return updatedData;
+    }
+    async getData() {
+        try {
+            const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
+            const snapshot = await (0, database_1.get)(dataRef);
+            console.log('Data retrieved successfully');
+            return snapshot.val();
+        }
+        catch (error) {
+            throw new Error('Failed to retrieve data: ' + error.message);
+        }
     }
     async getDataById(id) {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');
@@ -37,6 +86,9 @@ let LearningService = class LearningService {
                 retrievedData = childSnapshot.val();
             }
         });
+        if (!retrievedData) {
+            throw new Error(`Data with ID ${id} not found`);
+        }
         return retrievedData;
     }
     async deleteData(id) {
@@ -52,6 +104,9 @@ let LearningService = class LearningService {
                 deletedData = childSnapshot.val();
             }
         });
+        if (!deletedData) {
+            throw new Error(`Data with ID ${id} not found`);
+        }
         return deletedData;
     }
 };
