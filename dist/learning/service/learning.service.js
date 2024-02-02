@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LearningService = void 0;
 const common_1 = require("@nestjs/common");
 const database_1 = require("firebase/database");
-const firebase_config_1 = require("../../firebase.config");
+const firebase_config_1 = require("../../firebase/firebase.config");
 let LearningService = class LearningService {
     async createData(createLearningDto) {
         const dataRef = (0, database_1.ref)(firebase_config_1.firebaseDatabase, 'Data');

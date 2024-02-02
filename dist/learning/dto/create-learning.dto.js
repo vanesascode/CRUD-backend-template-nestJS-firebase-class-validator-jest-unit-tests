@@ -37,14 +37,14 @@ __decorate([
     __metadata("design:type", String)
 ], CreateLearningDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsDate)(),
-    __metadata("design:type", Date)
-], CreateLearningDto.prototype, "createDate", void 0);
-__decorate([
     (0, class_validator_1.MaxLength)(10, {
         each: true,
         message: 'Other animals must be less than 10 characters',
     }),
     __metadata("design:type", Array)
 ], CreateLearningDto.prototype, "otherAnimals", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(['male', 'female', 'binary', 'other']),
+    __metadata("design:type", String)
+], CreateLearningDto.prototype, "gender", void 0);
 //# sourceMappingURL=create-learning.dto.js.map

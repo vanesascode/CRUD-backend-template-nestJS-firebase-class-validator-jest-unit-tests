@@ -8,7 +8,7 @@ import {
   remove,
   DatabaseReference,
 } from 'firebase/database';
-import { firebaseDatabase } from 'src/firebase.config';
+import { firebaseDatabase } from '../../firebase/firebase.config';
 import { CreateLearningDto } from '../dto/create-learning.dto';
 import { UpdateLearningDto } from '../dto/update-learning.dto';
 
@@ -27,15 +27,22 @@ export class LearningService {
     const newElementRef = push(dataRef, { dataRef: createLearningDto });
     await set(newElementRef, createLearningDto);
     const snapshot: DataSnapshot = await get(newElementRef);
-    const createdData = snapshot.val();
+    const createdData: CreateLearningDto = snapshot.val();
     console.log('Data created successfully', createdData);
     return createdData;
   }
 
+  /**
+   * Updates data with the provided ID using the given updateLearningDto.
+   *
+   * @param {string} id - The ID of the data to be updated
+   * @param {UpdateLearningDto} updateLearningDto - The data to update
+   * @return {Promise<UpdateLearningDto>} The updated data
+   */
   async updateData(
     id: string,
     updateLearningDto: UpdateLearningDto,
-  ): Promise<CreateLearningDto> {
+  ): Promise<UpdateLearningDto> {
     const dataRef: DatabaseReference = ref(firebaseDatabase, 'Data');
     const snapshot = await get(dataRef);
     let updatedData: CreateLearningDto = null;
@@ -59,6 +66,13 @@ export class LearningService {
     return updatedData;
   }
 
+  /**
+   * Asynchronously updates the data with the given ID using the provided partial update object.
+   *
+   * @param {string} id - The ID of the data to be updated
+   * @param {Partial<UpdateLearningDto>} partialUpdateLearningDto - The partial update object
+   * @return {Promise<CreateLearningDto>} The updated data
+   */
   async patchData(
     id: string,
     partialUpdateLearningDto: Partial<UpdateLearningDto>,
@@ -91,9 +105,10 @@ export class LearningService {
   }
 
   /**
-   * Asynchronously retrieves data and returns a Promise that resolves to a CreateLearningDto.
+   * Asynchronously retrieves data and returns a promise of CreateLearningDto.
    *
-   * @return {Promise<CreateLearningDto>} the retrieved data
+   * @param {} -
+   * @return {Promise<CreateLearningDto>} - a promise of CreateLearningDto
    */
   async getData(): Promise<CreateLearningDto> {
     try {
@@ -112,7 +127,6 @@ export class LearningService {
    * @param {string} id - The ID of the data to retrieve
    * @return {Promise<CreateLearningDto>} The retrieved data
    */
-
   async getDataById(id: string): Promise<CreateLearningDto> {
     const dataRef: DatabaseReference = ref(firebaseDatabase, 'Data');
     const snapshot = await get(dataRef);

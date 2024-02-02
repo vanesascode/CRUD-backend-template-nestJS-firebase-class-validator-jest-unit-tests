@@ -5,8 +5,8 @@ import {
   IsEmail,
   IsInt,
   Length,
-  IsDate,
   MaxLength,
+  IsEnum,
 } from 'class-validator';
 
 export class CreateLearningDto {
@@ -27,12 +27,14 @@ export class CreateLearningDto {
   @IsEmail()
   email: string;
 
-  @IsDate()
-  createDate: Date;
+  createDate: string;
 
   @MaxLength(10, {
     each: true,
     message: 'Other animals must be less than 10 characters',
   })
   otherAnimals: string[];
+
+  @IsEnum(['male', 'female', 'binary', 'other'])
+  gender: 'male' | 'female' | 'binary' | 'other';
 }

@@ -4,6 +4,7 @@ export declare class CreateLearningDto {
     dog: string;
     owner: string;
     email: string;
-    createDate: Date;
+    createDate: string;
     otherAnimals: string[];
+    gender: 'male' | 'female' | 'binary' | 'other';
 }
