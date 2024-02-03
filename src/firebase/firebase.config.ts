@@ -6,7 +6,7 @@ import { getDatabase } from 'firebase/database';
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: 'AIzaSyCSLXM28S1OISklTZaHQhVN8_nmfIHKRfc',
+  apiKey: process.env.DATABASE_KEY,
   authDomain: 'learning-nestjs-80fc0.firebaseapp.com',
   projectId: 'learning-nestjs-80fc0',
   storageBucket: 'learning-nestjs-80fc0.appspot.com',

@@ -4,7 +4,7 @@ exports.firebaseDatabase = exports.app = exports.firebaseConfig = void 0;
 const app_1 = require("firebase/app");
 const database_1 = require("firebase/database");
 exports.firebaseConfig = {
-    apiKey: 'AIzaSyCSLXM28S1OISklTZaHQhVN8_nmfIHKRfc',
+    apiKey: process.env.DATABASE_KEY,
     authDomain: 'learning-nestjs-80fc0.firebaseapp.com',
     projectId: 'learning-nestjs-80fc0',
     storageBucket: 'learning-nestjs-80fc0.appspot.com',
